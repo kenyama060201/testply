@@ -1,0 +1,630 @@
+<title>獣医心エコー：新規ECG接続方法の図解</title>
+<style>
+  :root {
+    --ground: #F1F5F4;
+    --surface: #FFFFFF;
+    --surface-2: #E7EEEC;
+    --ink: #132523;
+    --ink-2: #4C6560;
+    --ink-3: #7A928D;
+    --line: #D4DFDC;
+    --accent: #0E7C86;      /* probe / ultrasound / gel */
+    --accent-2: #0A5A61;
+    --accent-wash: #DCEEF0;
+    --signal: #0E9E63;      /* ECG trace / R-wave / trigger */
+    --signal-wash: #DBF0E6;
+    --warn: #C7573C;        /* recommended / emphasis */
+    --warn-wash: #F6E1DB;
+    --gel: #63C6CF;
+    --skin: #E9C7B4;
+
+    --good: #0E9E63;
+    --part: #C88A1E;
+    --weak: #9AAFAB;
+
+    --maxw: 940px;
+    --radius: 14px;
+    --fs-label: 0.72rem;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0B1614;
+      --surface: #11201D;
+      --surface-2: #182B28;
+      --ink: #E9F1EF;
+      --ink-2: #A2B7B2;
+      --ink-3: #6E8681;
+      --line: #26403B;
+      --accent: #37BEC9;
+      --accent-2: #5AD3DC;
+      --accent-wash: #103237;
+      --signal: #35D68E;
+      --signal-wash: #0E2E22;
+      --warn: #F0836A;
+      --warn-wash: #35201B;
+      --gel: #3E8f98;
+      --skin: #B98D74;
+      --good: #35D68E;
+      --part: #E0AB4B;
+      --weak: #6E8681;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0B1614; --surface: #11201D; --surface-2: #182B28;
+    --ink: #E9F1EF; --ink-2: #A2B7B2; --ink-3: #6E8681; --line: #26403B;
+    --accent: #37BEC9; --accent-2: #5AD3DC; --accent-wash: #103237;
+    --signal: #35D68E; --signal-wash: #0E2E22; --warn: #F0836A; --warn-wash: #35201B;
+    --gel: #3E8f98; --skin: #B98D74; --good: #35D68E; --part: #E0AB4B; --weak: #6E8681;
+  }
+  :root[data-theme="light"] {
+    --ground: #F1F5F4; --surface: #FFFFFF; --surface-2: #E7EEEC;
+    --ink: #132523; --ink-2: #4C6560; --ink-3: #7A928D; --line: #D4DFDC;
+    --accent: #0E7C86; --accent-2: #0A5A61; --accent-wash: #DCEEF0;
+    --signal: #0E9E63; --signal-wash: #DBF0E6; --warn: #C7573C; --warn-wash: #F6E1DB;
+    --gel: #63C6CF; --skin: #E9C7B4; --good: #0E9E63; --part: #C88A1E; --weak: #9AAFAB;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 10px;
+  }
+  h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0; }
+  h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 800; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.35rem, 3vw, 1.85rem); font-weight: 750; letter-spacing: -0.01em; }
+  h3 { font-size: 1.08rem; font-weight: 700; }
+  p { margin: 0; }
+
+  /* ---- header ---- */
+  header {
+    background:
+      radial-gradient(1200px 340px at 82% -40%, var(--accent-wash), transparent 70%),
+      var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .head-inner { padding: 40px 0 30px; }
+  .lede { color: var(--ink-2); font-size: 1.06rem; max-width: 60ch; margin-top: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .chip {
+    font-family: var(--mono); font-size: var(--fs-label); letter-spacing: 0.03em;
+    padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink-2);
+  }
+
+  section { padding: 46px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .sec-head { margin-bottom: 26px; }
+  .sec-head .lede { margin-top: 10px; font-size: 1rem; }
+
+  /* ---- figure frame ---- */
+  figure { margin: 0; }
+  .fig {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    overflow-x: auto;
+  }
+  .fig svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption {
+    font-family: var(--mono); font-size: var(--fs-label); color: var(--ink-3);
+    margin-top: 12px; letter-spacing: 0.02em;
+  }
+
+  /* ---- insight cards ---- */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  .insight {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .insight .k {
+    font-family: var(--mono); font-size: var(--fs-label); letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent-2); margin-bottom: 8px;
+  }
+  .insight p { color: var(--ink-2); font-size: 0.97rem; }
+  .insight strong { color: var(--ink); }
+
+  /* ---- proposal cards ---- */
+  .prop {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 22px; margin-top: 18px;
+  }
+  .prop.feature { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+  .prop-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 4px; }
+  .badge {
+    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 11px;
+    display: grid; place-items: center; font-family: var(--mono); font-weight: 700;
+    font-size: 1.2rem; background: var(--accent-wash); color: var(--accent-2);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .prop-title { flex: 1; }
+  .prop-title h3 { display: inline; margin-right: 8px; }
+  .tag {
+    display: inline-block; font-family: var(--mono); font-size: 0.66rem;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px;
+    border-radius: 999px; vertical-align: middle;
+  }
+  .tag.rec { background: var(--warn-wash); color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); }
+  .tag.fast { background: var(--signal-wash); color: var(--signal); border: 1px solid color-mix(in srgb, var(--signal) 35%, transparent); }
+  .prop-title p { color: var(--ink-2); font-size: 0.95rem; margin-top: 6px; }
+
+  .prop-body { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 20px; margin-top: 16px; align-items: center; }
+  @media (max-width: 760px) { .prop-body { grid-template-columns: 1fr; } }
+  .pc-list { display: flex; flex-direction: column; gap: 12px; }
+  .pc { font-size: 0.92rem; }
+  .pc .lab { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+  .pc.pro .lab { color: var(--good); }
+  .pc.con .lab { color: var(--part); }
+  .pc p { color: var(--ink-2); }
+
+  .mini-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 18px; }
+  @media (max-width: 760px) { .mini-grid { grid-template-columns: 1fr; } }
+  .mini { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  .mini .badge { width: 34px; height: 34px; font-size: 1rem; border-radius: 9px; margin-bottom: 12px; }
+  .mini h3 { font-size: 1rem; }
+  .mini p { color: var(--ink-2); font-size: 0.9rem; margin-top: 6px; }
+  .mini .fig { padding: 12px; margin-top: 14px; }
+
+  /* ---- table ---- */
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 0.9rem; }
+  caption { text-align: left; padding: 16px 18px 0; font-family: var(--mono); font-size: var(--fs-label); color: var(--ink-3); letter-spacing: 0.04em; }
+  th, td { padding: 11px 14px; text-align: center; border-bottom: 1px solid var(--line); }
+  thead th { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--ink-2); font-weight: 600; background: var(--surface-2); }
+  tbody th { text-align: left; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  th.rec-col { color: var(--warn); }
+  .dot { display: inline-block; font-weight: 700; font-family: var(--mono); }
+  .g { color: var(--good); } .p { color: var(--part); } .w { color: var(--weak); }
+
+  footer { padding: 34px 0 60px; color: var(--ink-3); font-size: 0.86rem; }
+  footer .wrap { border-top: 1px solid var(--line); padding-top: 22px; }
+
+  /* SVG semantic classes (theme-aware via tokens) */
+  .s-ink   { stroke: var(--ink); }
+  .s-line  { stroke: var(--line); }
+  .s-ink2  { stroke: var(--ink-2); }
+  .s-acc   { stroke: var(--accent); }
+  .s-sig   { stroke: var(--signal); }
+  .f-surf  { fill: var(--surface); }
+  .f-surf2 { fill: var(--surface-2); }
+  .f-acc   { fill: var(--accent); }
+  .f-accw  { fill: var(--accent-wash); }
+  .f-sig   { fill: var(--signal); }
+  .f-ink   { fill: var(--ink); }
+  .f-ink2  { fill: var(--ink-2); }
+  .f-gel   { fill: var(--gel); }
+  .f-skin  { fill: var(--skin); }
+  .f-warn  { fill: var(--warn); }
+  .t-lab   { font-family: var(--mono); font-size: 12px; fill: var(--ink-2); letter-spacing: 0.02em; }
+  .t-lab-s { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+  .t-acc   { fill: var(--accent-2); }
+  .lead    { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sweep { animation: sweep 3.4s linear infinite; }
+    @keyframes sweep { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -520; } }
+  }
+</style>
+
+<header>
+  <div class="wrap head-inner">
+    <p class="eyebrow">獣医循環器 · 概念設計プロポーザル</p>
+    <h1>動物の心エコーにおける<br>新規ECG接続方法</h1>
+    <p class="lede">モニタ用心電図（ゲーティング／心時相同定）に的を絞った、被毛・覚醒下体動・側臥位＋くり抜きテーブルに適応する5つの接続コンセプト。図解版。</p>
+    <div class="chips">
+      <span class="chip">対象: 犬・猫</span>
+      <span class="chip">用途: R波トリガー</span>
+      <span class="chip">診断12誘導の置換ではない</span>
+      <span class="chip">要 安全性・臨床検証</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== SCENE ===================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">検査シーン</p>
+      <h2>くり抜きテーブルと下側からの走査</h2>
+      <p class="lede">側臥位の動物を開口テーブルに乗せ、下側胸壁の音響窓からプローブを当てる。四肢は前方に伸展保持される。ここに、どう電気接点を取るかが設計課題。</p>
+    </div>
+    <figure class="fig">
+      <svg viewBox="0 0 720 350" role="img" aria-label="くり抜きテーブル上の側臥位の犬と、下からのプローブ、四肢カフ、ECGトレースの模式図">
+        <!-- ECG strip (top) -->
+        <rect x="24" y="20" width="672" height="60" rx="8" class="f-surf2"/>
+        <path id="scene-ecg" class="s-sig sweep" fill="none" stroke-width="2"
+          stroke-dasharray="520 520"
+          d="M28 50 H70 q6 0 8 -4 l4 -10 q3 -8 6 0 l4 12 q2 4 8 4 H150 l6 4 6 -30 6 44 6 -18 H210 q6 0 9 -4 l5 -12 q3 -7 6 0 l4 12 q2 4 8 4 H320 l6 4 6 -30 6 44 6 -18 H380 q6 0 9 -4 l5 -12 q3 -7 6 0 l4 12 q2 4 8 4 H490 l6 4 6 -30 6 44 6 -18 H560 q6 0 9 -4 l5 -12 q3 -7 6 0 l4 12 q2 4 8 4 H690"/>
+        <text x="30" y="36" class="t-lab t-acc" style="fill:var(--signal)">ECG · R波トリガー</text>
+
+        <!-- table surface with cutout -->
+        <rect x="40" y="238" width="250" height="16" rx="3" class="f-surf2 s-line" stroke-width="1"/>
+        <rect x="430" y="238" width="250" height="16" rx="3" class="f-surf2 s-line" stroke-width="1"/>
+        <rect x="70" y="254" width="12" height="60" class="f-surf2"/>
+        <rect x="640" y="254" width="12" height="60" class="f-surf2"/>
+        <text x="335" y="300" text-anchor="middle" class="t-lab">くり抜き（開口）</text>
+        <path class="lead" d="M335 288 V262"/>
+
+        <!-- dog body (lateral recumbency) -->
+        <ellipse cx="360" cy="196" rx="215" ry="44" class="f-surf s-ink2" stroke-width="1.5"/>
+        <!-- head left -->
+        <circle cx="170" cy="182" r="30" class="f-surf s-ink2" stroke-width="1.5"/>
+        <path d="M150 158 l-6 -22 20 12 z" class="f-surf s-ink2" stroke-width="1.5"/>
+        <path d="M140 186 q-16 2 -22 8" class="s-ink2" fill="none" stroke-width="1.5"/>
+        <circle cx="156" cy="180" r="2.4" class="f-ink"/>
+        <!-- tail -->
+        <path d="M572 188 q34 -6 40 -26" class="s-ink2" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- hind legs -->
+        <rect x="500" y="230" width="12" height="26" rx="5" class="f-surf s-ink2" stroke-width="1.5"/>
+        <rect x="524" y="230" width="12" height="26" rx="5" class="f-surf s-ink2" stroke-width="1.5"/>
+        <!-- extended foreleg to the left toward cuff -->
+        <path d="M210 214 q-40 20 -78 26" class="s-ink2" fill="none" stroke-width="7" stroke-linecap="round"/>
+        <!-- heart inside body -->
+        <path d="M360 176 c-8 -12 -26 -6 -26 8 c0 12 18 20 26 30 c8 -10 26 -18 26 -30 c0 -14 -18 -20 -26 -8 z"
+              class="f-warn" opacity="0.85"/>
+        <text x="392" y="168" class="t-lab-s">心臓</text>
+        <path class="lead" d="M388 168 L372 182"/>
+
+        <!-- ultrasound probe from below into cutout -->
+        <!-- beam cone -->
+        <path d="M360 216 L332 250 L388 250 Z" class="f-acc" opacity="0.18"/>
+        <path d="M360 216 L340 238 L380 238 Z" class="f-acc" opacity="0.30"/>
+        <!-- probe body -->
+        <rect x="344" y="250" width="32" height="54" rx="7" class="f-acc"/>
+        <rect x="352" y="242" width="16" height="12" rx="3" class="f-acc"/>
+        <line x1="360" y1="304" x2="360" y2="332" class="s-acc" stroke-width="3" stroke-linecap="round"/>
+        <text x="398" y="288" class="t-lab t-acc" style="fill:var(--accent)">プローブ</text>
+        <path class="lead" d="M394 284 L378 276"/>
+        <text x="300" y="228" text-anchor="end" class="t-lab-s">音響窓（前処理済）</text>
+        <path class="lead" d="M304 224 L344 220"/>
+
+        <!-- limb cuff -->
+        <rect x="112" y="228" width="34" height="24" rx="7" class="f-accw s-acc" stroke-width="1.5"/>
+        <line x1="120" y1="228" x2="120" y2="252" class="s-acc" stroke-width="1.2"/>
+        <line x1="129" y1="228" x2="129" y2="252" class="s-acc" stroke-width="1.2"/>
+        <line x1="138" y1="228" x2="138" y2="252" class="s-acc" stroke-width="1.2"/>
+        <text x="128" y="278" text-anchor="middle" class="t-lab">四肢カフ（基準）</text>
+        <path class="lead" d="M129 268 L129 254"/>
+      </svg>
+      <figcaption>FIG.0 — 側臥位 × くり抜きテーブル × 下側走査。四肢誘導は胸壁窓に干渉しない。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== INSIGHTS ===================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">設計レバレッジ</p>
+      <h2>2つの前提が、新しい接続を可能にする</h2>
+    </div>
+    <div class="grid-2" style="margin-bottom:18px;">
+      <div class="insight">
+        <div class="k">Leverage 01</div>
+        <p>必要なのは診断品質の波形ではなく<strong>鋭いR波（QRS）のタイミング</strong>だけ。ST忠実度も12誘導としての妥当性も不要 → 非標準配置・短い電極間距離でも、QRSが立てば許容できる。</p>
+      </div>
+      <div class="insight">
+        <div class="k">Leverage 02 · 獣医特有</div>
+        <p>音響窓は検査時に<strong>アルコール／ゲルで濡れ、必要なら毛刈り済み</strong>＝被毛の障害が既に除去された部位。ここを電気接点に流用できる。四肢誘導は胸壁窓にそもそも干渉しない。</p>
+      </div>
+    </div>
+    <figure class="fig">
+      <svg viewBox="0 0 720 190" role="img" aria-label="ECG波形からR波を検出しトリガーパルスを生成する図">
+        <line x1="24" y1="96" x2="696" y2="96" class="s-line" stroke-width="1" stroke-dasharray="2 4"/>
+        <path fill="none" class="s-sig" stroke-width="2.2" stroke-linejoin="round"
+          d="M24 96 H96 q7 0 9 -5 l5 -13 q3 -9 7 0 l5 15 q2 5 9 5 H150 l7 6 8 -58 8 84 8 -32 H250
+             q7 0 9 -5 l5 -13 q3 -9 7 0 l5 15 q2 5 9 5 H360 l7 6 8 -58 8 84 8 -32 H460
+             q7 0 9 -5 l5 -13 q3 -9 7 0 l5 15 q2 5 9 5 H570 l7 6 8 -58 8 84 8 -32 H696"/>
+        <!-- R markers -->
+        <circle cx="181" cy="34" r="4.5" class="f-warn"/>
+        <circle cx="391" cy="34" r="4.5" class="f-warn"/>
+        <circle cx="601" cy="34" r="4.5" class="f-warn"/>
+        <text x="181" y="24" text-anchor="middle" class="t-lab-s" style="fill:var(--warn)">R</text>
+        <text x="391" y="24" text-anchor="middle" class="t-lab-s" style="fill:var(--warn)">R</text>
+        <text x="601" y="24" text-anchor="middle" class="t-lab-s" style="fill:var(--warn)">R</text>
+        <!-- trigger pulses -->
+        <g class="s-acc" stroke-width="2">
+          <path d="M181 168 V150 H0" transform="translate(0,0)" fill="none"/>
+        </g>
+        <g class="f-acc">
+          <rect x="177" y="150" width="8" height="20" rx="1"/>
+          <rect x="387" y="150" width="8" height="20" rx="1"/>
+          <rect x="597" y="150" width="8" height="20" rx="1"/>
+        </g>
+        <line x1="24" y1="170" x2="696" y2="170" class="s-line" stroke-width="1"/>
+        <text x="30" y="146" class="t-lab" style="fill:var(--accent)">TRIGGER OUT → 心エコー ゲート入力</text>
+      </svg>
+      <figcaption>FIG.1 — R波検出 → 低遅延トリガーパルス。これが接続方法に求められる唯一の必須出力。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== PROPOSAL A ===================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">提案 · 本命</p>
+      <h2>5つの接続コンセプト</h2>
+      <p class="lede">AとBを推奨。Aは追加装着ほぼゼロの本命、Bは今日から置換できる即効策。</p>
+    </div>
+
+    <div class="prop feature">
+      <div class="prop-top">
+        <div class="badge">A</div>
+        <div class="prop-title">
+          <h3>プローブ一体型「ゲル結合」ECG</h3><span class="tag rec">推奨・本命</span>
+          <p>プローブ足面の同心リング電極が、超音波ゲルを電解質として皮膚と結合。取得点＝走査点。基準は四肢1点だけ。</p>
+        </div>
+      </div>
+      <div class="prop-body">
+        <figure class="fig">
+          <svg viewBox="0 0 420 260" role="img" aria-label="プローブ断面：同心リング電極、ゲル層、皮膚、四肢基準への結線">
+            <!-- skin + fur -->
+            <rect x="20" y="150" width="380" height="90" rx="4" class="f-skin" opacity="0.55"/>
+            <g class="s-ink2" stroke-width="1">
+              <line x1="40" y1="150" x2="34" y2="140"/><line x1="70" y1="150" x2="66" y2="139"/>
+              <line x1="100" y1="150" x2="95" y2="140"/><line x1="300" y1="150" x2="306" y2="139"/>
+              <line x1="330" y1="150" x2="335" y2="140"/><line x1="360" y1="150" x2="366" y2="139"/>
+            </g>
+            <text x="30" y="200" class="t-lab-s">皮膚 ／ 被毛（窓は前処理済）</text>
+
+            <!-- gel layer -->
+            <path d="M120 150 q40 -14 90 0 q50 -14 90 0 v10 q-45 12 -90 0 q-46 12 -90 0 z" class="f-gel" opacity="0.7"/>
+            <text x="212" y="176" text-anchor="middle" class="t-lab-s" style="fill:var(--accent-2)">超音波ゲル ＝ 電解質</text>
+
+            <!-- probe body -->
+            <rect x="150" y="40" width="120" height="96" rx="12" class="f-acc"/>
+            <rect x="176" y="14" width="68" height="30" rx="6" class="f-acc" opacity="0.85"/>
+            <!-- footprint -->
+            <rect x="150" y="128" width="120" height="14" rx="4" class="f-ink2" opacity="0.35"/>
+            <!-- concentric ring electrodes -->
+            <rect x="150" y="130" width="18" height="14" rx="3" class="f-sig"/>
+            <rect x="252" y="130" width="18" height="14" rx="3" class="f-sig"/>
+            <text x="210" y="86" text-anchor="middle" class="t-lab" style="fill:#fff">PROBE</text>
+            <line x1="159" y1="128" x2="159" y2="150" class="s-sig" stroke-width="2"/>
+            <line x1="261" y1="128" x2="261" y2="150" class="s-sig" stroke-width="2"/>
+            <text x="120" y="120" text-anchor="end" class="t-lab-s" style="fill:var(--signal)">リング電極</text>
+            <path class="lead" d="M124 120 L150 133"/>
+
+            <!-- reference wire to limb -->
+            <path d="M270 90 q70 -6 96 40 q10 26 -8 60" class="s-acc" fill="none" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle cx="352" cy="206" r="12" class="f-accw s-acc" stroke-width="1.5"/>
+            <line x1="345" y1="196" x2="345" y2="216" class="s-acc"/><line x1="352" y1="194" x2="352" y2="218" class="s-acc"/><line x1="359" y1="196" x2="359" y2="216" class="s-acc"/>
+            <text x="352" y="238" text-anchor="middle" class="t-lab">四肢基準 1点</text>
+          </svg>
+          <figcaption>FIG.A — ゲルが超音波と電気の共通インターフェースになる。</figcaption>
+        </figure>
+        <div class="pc-list">
+          <div class="pc pro"><div class="lab">利点</div><p>追加装着ほぼゼロ／被毛障害は窓の前処理が肩代わり／走査点に追従／クリップ全廃。POCUS・往診と好相性。</p></div>
+          <div class="pc con"><div class="lab">課題と対策</div><p>窓移動で振幅変動 → 微分＋適応閾値でR検出。電極間短くQRS小 → 高CMRR＋DRL＋四肢基準。ゲルむら → 接触インピーダンス監視で信頼度表示。</p></div>
+          <div class="pc"><div class="lab" style="color:var(--ink-3)">成熟度</div><p style="color:var(--ink-2)">中（新規性高・要試作）</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPOSAL B -->
+    <div class="prop feature">
+      <div class="prop-top">
+        <div class="badge">B</div>
+        <div class="prop-title">
+          <h3>濡れ導電スリップオン四肢カフ</h3><span class="tag fast">即実装</span>
+          <p>つまむ鰐口クリップを、導電ゲル／アルコール含浸スポンジ入りの巻きカフに置換。無痛・数秒装着・被毛下でも面接触。</p>
+        </div>
+      </div>
+      <div class="prop-body">
+        <figure class="fig">
+          <svg viewBox="0 0 420 220" role="img" aria-label="鰐口クリップと、スリップオン導電カフの比較図">
+            <!-- divider -->
+            <line x1="210" y1="24" x2="210" y2="196" class="s-line" stroke-width="1" stroke-dasharray="3 4"/>
+            <text x="105" y="30" text-anchor="middle" class="t-lab-s">現行：鰐口クリップ</text>
+            <text x="315" y="30" text-anchor="middle" class="t-lab-s" style="fill:var(--accent-2)">提案B：導電カフ</text>
+
+            <!-- LEFT: limb + alligator clip -->
+            <rect x="40" y="110" width="140" height="30" rx="15" class="f-surf2 s-ink2" stroke-width="1.2"/>
+            <g class="s-ink2" stroke-width="0.8">
+              <line x1="60" y1="110" x2="56" y2="102"/><line x1="80" y1="110" x2="76" y2="102"/>
+              <line x1="100" y1="110" x2="96" y2="102"/><line x1="120" y1="110" x2="116" y2="102"/>
+            </g>
+            <!-- clip jaws (jagged) -->
+            <path d="M92 78 l8 6 -8 6 8 6 -8 6 8 6 -8 6" class="s-ink" fill="none" stroke-width="1.5"/>
+            <path d="M124 78 l-8 6 8 6 -8 6 8 6 -8 6 8 6" class="s-ink" fill="none" stroke-width="1.5"/>
+            <rect x="96" y="60 " width="24" height="18" rx="3" class="f-surf2 s-ink" stroke-width="1.2"/>
+            <!-- stress / discomfort marks -->
+            <g class="s-warn" stroke-width="1.5" stroke-linecap="round">
+              <line x1="132" y1="88" x2="140" y2="84"/><line x1="132" y1="96" x2="141" y2="96"/><line x1="132" y1="104" x2="140" y2="108"/>
+            </g>
+            <text x="110" y="164" text-anchor="middle" class="t-lab-s" style="fill:var(--warn)">つまみ圧・外れ・接触不良</text>
+
+            <!-- RIGHT: limb + slip-on cuff -->
+            <rect x="240" y="110" width="140" height="30" rx="15" class="f-surf2 s-ink2" stroke-width="1.2"/>
+            <g class="s-ink2" stroke-width="0.8">
+              <line x1="260" y1="110" x2="256" y2="102"/><line x1="360" y1="110" x2="356" y2="102"/>
+            </g>
+            <!-- cuff band wrapping -->
+            <rect x="288" y="86" width="52" height="78" rx="12" class="f-accw s-acc" stroke-width="1.6"/>
+            <!-- sponge dots (impregnated contact) -->
+            <g class="f-sig">
+              <circle cx="300" cy="125" r="3"/><circle cx="314" cy="118" r="3"/><circle cx="328" cy="127" r="3"/>
+              <circle cx="308" cy="135" r="3"/><circle cx="324" cy="134" r="3"/>
+            </g>
+            <text x="314" y="78" text-anchor="middle" class="t-lab-s" style="fill:var(--signal)">含浸スポンジ＝面接触</text>
+            <text x="314" y="180" text-anchor="middle" class="t-lab-s" style="fill:var(--accent-2)">無痛・数秒・再利用可</text>
+          </svg>
+          <figcaption>FIG.B — 点で挟むクリップから、面で当てるカフへ。</figcaption>
+        </figure>
+        <div class="pc-list">
+          <div class="pc pro"><div class="lab">利点</div><p>つまみ圧ゼロで動物に優しい／被毛下でも面接触で安定／標準四肢誘導のまま乗る＝今日から導入可能。</p></div>
+          <div class="pc con"><div class="lab">課題</div><p>体格差でのフィット／含浸材の乾燥管理。無線モジュール（提案E）と組合せ可。</p></div>
+          <div class="pc"><div class="lab" style="color:var(--ink-3)">成熟度</div><p style="color:var(--ink-2)">高（既存材料の組合せ・すぐ試作可）</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPOSALS C / D / E -->
+    <div class="mini-grid">
+      <div class="mini">
+        <div class="badge">C</div>
+        <h3>保定一体型 電極</h3>
+        <p>保定グローブ／保定具の掌側に導電接点。押さえる＝接続で工程ゼロ。</p>
+        <figure class="fig">
+          <svg viewBox="0 0 220 120" role="img" aria-label="保定グローブに導電接点を仕込む図">
+            <path d="M60 96 q-6 -40 10 -50 q4 -18 12 0 q4 -16 12 0 q4 -14 12 0 q6 -4 10 4 l6 30 q4 26 -14 34 z"
+                  class="f-surf2 s-ink2" stroke-width="1.4"/>
+            <circle cx="78" cy="70" r="5" class="f-sig"/><circle cx="96" cy="66" r="5" class="f-sig"/><circle cx="88" cy="84" r="5" class="f-sig"/>
+            <rect x="120" y="60" width="70" height="30" rx="15" class="f-surf2 s-ink2" stroke-width="1.2"/>
+            <text x="150" y="112" text-anchor="middle" class="t-lab-s">保定=接続</text>
+          </svg>
+        </figure>
+      </div>
+      <div class="mini">
+        <div class="badge">D</div>
+        <h3>テーブル一体型 サドル電極</h3>
+        <p>下側の腋窩・肢が当たるテーブル面に導電パッド。載せるだけ・清拭で高回転。</p>
+        <figure class="fig">
+          <svg viewBox="0 0 220 120" role="img" aria-label="くり抜きテーブル面に導電パッドを配置する図">
+            <rect x="20" y="70" width="70" height="12" rx="3" class="f-surf2 s-line" stroke-width="1"/>
+            <rect x="130" y="70" width="70" height="12" rx="3" class="f-surf2 s-line" stroke-width="1"/>
+            <rect x="34" y="62" width="30" height="8" rx="4" class="f-sig"/>
+            <rect x="156" y="62" width="30" height="8" rx="4" class="f-sig"/>
+            <ellipse cx="110" cy="52" rx="80" ry="18" class="f-surf s-ink2" stroke-width="1.3"/>
+            <text x="110" y="106" text-anchor="middle" class="t-lab-s">載せるだけ</text>
+          </svg>
+        </figure>
+      </div>
+      <div class="mini">
+        <div class="badge">E</div>
+        <h3>無線モジュール＋オンボードR検出</h3>
+        <p>その場でR波検出しトリガーだけ送信。ケーブル絡みを根絶、往診に軽快。</p>
+        <figure class="fig">
+          <svg viewBox="0 0 220 120" role="img" aria-label="無線モジュールがトリガーを送信する図">
+            <rect x="30" y="46" width="46" height="34" rx="8" class="f-accw s-acc" stroke-width="1.5"/>
+            <path d="M50 63 l6 5 8 -14" class="s-sig" fill="none" stroke-width="2"/>
+            <g class="s-acc" fill="none" stroke-width="2" stroke-linecap="round">
+              <path d="M92 52 q14 12 0 28"/><path d="M104 44 q24 20 0 44"/><path d="M116 36 q34 28 0 60"/>
+            </g>
+            <rect x="150" y="46" width="46" height="34" rx="6" class="f-surf2 s-line" stroke-width="1.2"/>
+            <text x="173" y="67" text-anchor="middle" class="t-lab-s">ゲート</text>
+            <text x="110" y="112" text-anchor="middle" class="t-lab-s">ケーブルレス</text>
+          </svg>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SIGNAL CHAIN ===================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">共通エンジニアリング</p>
+      <h2>電極からゲート入力までの信号チェーン</h2>
+      <p class="lede">どの接続方式でも共通。パンティング／筋電の帯域分離と、猫の高心拍に耐える適応閾値がR波検出の要。</p>
+    </div>
+    <figure class="fig">
+      <svg viewBox="0 0 720 150" role="img" aria-label="電極から計装アンプ、DRL、帯域強調、R波検出、絶縁、トリガー出力までのブロック図">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" class="f-ink2"/>
+          </marker>
+        </defs>
+        <g class="s-line" stroke-width="1.5" fill="none">
+          <rect x="20"  y="48" width="96" height="54" rx="9" class="f-surf2"/>
+          <rect x="156" y="48" width="104" height="54" rx="9" class="f-surf2"/>
+          <rect x="300" y="48" width="104" height="54" rx="9" class="f-surf2"/>
+          <rect x="444" y="48" width="104" height="54" rx="9" class="f-surf2"/>
+          <rect x="588" y="48" width="112" height="54" rx="9" class="f-accw s-acc"/>
+        </g>
+        <g class="t-lab" text-anchor="middle">
+          <text x="68"  y="72">電極 ＋</text><text x="68"  y="88" class="t-lab-s">DRL 能動接地</text>
+          <text x="208" y="72">計装アンプ</text><text x="208" y="88" class="t-lab-s">高CMRR</text>
+          <text x="352" y="72">帯域強調</text><text x="352" y="88" class="t-lab-s">QRS ／ 筋電除去</text>
+          <text x="496" y="72">R波検出</text><text x="496" y="88" class="t-lab-s">微分＋適応閾値</text>
+          <text x="644" y="72" style="fill:var(--accent-2)">絶縁 → トリガー</text><text x="644" y="88" class="t-lab-s">&lt; 数ms ジッタ</text>
+        </g>
+        <g class="s-ink2" stroke-width="1.4" marker-end="url(#ar)">
+          <line x1="116" y1="75" x2="152" y2="75"/>
+          <line x1="260" y1="75" x2="296" y2="75"/>
+          <line x1="404" y1="75" x2="440" y2="75"/>
+          <line x1="548" y1="75" x2="584" y2="75"/>
+        </g>
+        <text x="360" y="132" text-anchor="middle" class="t-lab-s">超音波電子回路とはガルバニック絶縁で分離（患者安全）</text>
+      </svg>
+      <figcaption>FIG.2 — 波形ストリームに加え、ハードウェアのトリガー出力を機器のゲート入力へ。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== MATRIX ===================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">意思決定</p>
+      <h2>方式比較（獣医コンテキスト）</h2>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <caption>◎ = 強い  ○ = 良好  △ = 条件付き　／　推奨列を強調</caption>
+        <thead>
+          <tr>
+            <th scope="col" style="text-align:left">観点</th>
+            <th scope="col" class="rec-col">A 一体型ゲル結合</th>
+            <th scope="col" class="rec-col">B 四肢カフ</th>
+            <th scope="col">C 保定一体</th>
+            <th scope="col">D テーブル</th>
+            <th scope="col">E 無線</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">追加装着の手間</th><td><span class="dot g">ほぼゼロ</span></td><td><span class="dot g">数秒</span></td><td><span class="dot g">ゼロ</span></td><td><span class="dot g">ゼロ</span></td><td><span class="dot p">数秒</span></td></tr>
+          <tr><th scope="row">被毛下の接触安定</th><td><span class="dot g">◎</span></td><td><span class="dot g">◎</span></td><td><span class="dot p">○</span></td><td><span class="dot p">△</span></td><td><span class="dot g">◎</span></td></tr>
+          <tr><th scope="row">動物への低ストレス</th><td><span class="dot g">◎</span></td><td><span class="dot g">◎</span></td><td><span class="dot p">○</span></td><td><span class="dot g">◎</span></td><td><span class="dot g">◎</span></td></tr>
+          <tr><th scope="row">体動・パンティング耐性</th><td><span class="dot p">○</span></td><td><span class="dot p">○</span></td><td><span class="dot w">△</span></td><td><span class="dot w">△</span></td><td><span class="dot p">○</span></td></tr>
+          <tr><th scope="row">ケーブル絡み回避</th><td><span class="dot p">○</span></td><td><span class="dot w">△</span></td><td><span class="dot p">○</span></td><td><span class="dot g">◎</span></td><td><span class="dot g">◎</span></td></tr>
+          <tr><th scope="row">側臥位／くり抜き適合</th><td><span class="dot g">◎</span></td><td><span class="dot p">○</span></td><td><span class="dot p">○</span></td><td><span class="dot g">◎</span></td><td><span class="dot g">◎</span></td></tr>
+          <tr><th scope="row">衛生・回転</th><td><span class="dot p">○</span></td><td><span class="dot p">○</span></td><td><span class="dot p">○</span></td><td><span class="dot g">◎</span></td><td><span class="dot p">○</span></td></tr>
+          <tr><th scope="row">実装容易性</th><td><span class="dot w">△</span></td><td><span class="dot g">◎</span></td><td><span class="dot p">○</span></td><td><span class="dot w">△</span></td><td><span class="dot p">○</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="insight" style="border-left-color:var(--warn)">
+        <div class="k" style="color:var(--warn)">短期</div>
+        <p><strong>B 四肢カフ</strong>で鰐口クリップを置換。無痛・被毛下安定・数秒装着を即獲得。</p>
+      </div>
+      <div class="insight">
+        <div class="k">中期・本命</div>
+        <p><strong>A 一体型ゲル結合</strong>を試作。追加装着ゼロ・走査点追従を実証。POCUS／往診で有効。</p>
+      </div>
+      <div class="insight">
+        <div class="k">併用</div>
+        <p><strong>E 無線</strong>でケーブル絡み根絶、<strong>D テーブル</strong>で高回転外来を効率化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    本図解は概念設計であり、電気的安全性試験（絶縁・漏れ電流）と犬・猫での臨床検証を前提とする。R波検出は標準四肢誘導比で感度・PPV同等以上、トリガージッタ小を目標とする。
+  </div>
+</footer>
